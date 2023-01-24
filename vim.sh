@@ -1,10 +1,19 @@
 #! /usr/bin/bash
 
+FL="/etc/vim/vimrc"
+
+#check os
+OS=`grep ID /etc/os-release -m 1 | cut -d "=" -f2 | tr -d '"'`
+if [ "$OS" = "rhel" ]
+then
+	FL="/etc/vimrc"
+fi
+
 #check if relative number is set
-CH=`grep relativenumber /etc/vim/vimrc`
+CH=`grep relativenumber ${FL}`
 if [[ -z $CH ]]
 then
-	echo -e "set relativenumber" | sudo tee -a /etc/vim/vimrc
+	echo -e "set relativenumber" | sudo tee -a ${FL}
 fi
 
 
@@ -24,17 +33,17 @@ then
 fi
 
 #monokai
-wget -O $C_DIR/molokai.vim https://raw.githubusercontent.com/tomasr/molokai/master/colors/molokai.vim
+curl -Lo $C_DIR/molokai.vim https://raw.githubusercontent.com/tomasr/molokai/master/colors/molokai.vim
 
 #onedark
-wget -O $C_DIR/onedark.vim https://raw.githubusercontent.com/joshdick/onedark.vim/main/colors/onedark.vim
-wget -O "${DIR}/autoload/onedark.vim" https://raw.githubusercontent.com/joshdick/onedark.vim/main/autoload/onedark.vim
+curl -Lo $C_DIR/onedark.vim https://raw.githubusercontent.com/joshdick/onedark.vim/main/colors/onedark.vim
+curl -Lo "${DIR}/autoload/onedark.vim" https://raw.githubusercontent.com/joshdick/onedark.vim/main/autoload/onedark.vim
 
 #set default colorscheme
 CLR="onedark"
 #CH1=`grep "colorscheme ${CLR}" /etc/vim/vimrc`
 
-echo "colorscheme ${CLR}" | sudo tee -a /etc/vim/vimrc
+echo "colorscheme ${CLR}" | sudo tee -a ${FL}
 
 #Plugins
 P_DIR="${DIR}/pack/plugins/start"
