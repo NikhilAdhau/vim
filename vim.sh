@@ -88,7 +88,7 @@ if [[ ! -d $P_DIR_5 ]]
 then
 	git clone  https://github.com/preservim/tagbar.git  $P_DIR_5
 fi
-echo -e "map <silent> <C-t> :TagbarToggle<CR>" | sudo tee -a ${FL}
+echo -e "map <silent> <C-v> :TagbarToggle<CR>" | sudo tee -a ${FL}
 
 
 
